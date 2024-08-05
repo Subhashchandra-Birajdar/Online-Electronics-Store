@@ -1,0 +1,25 @@
+1. User Module (for user management) 
+	user create,delete,update,delete,search
+    	user athentication and authorization
+
+2. Product Module(how to manage the product)
+	 like phone(add,delete,get,update) like manage the product
+	
+3. Category Module ( for categories throguh product )
+	category(update,delete,add)- category management
+
+4. Cart Module 
+	All the time it manged by forntend), but here we will build in backend
+	every user have an cart(user can add cart, remove the cart)
+
+5. Order Module
+
+6. Role Module(Admin, user)
+
+6. Other Module(like Payment API)
+
+Optinal we will see in later
+7.  Sub- Category Module ( category inside sub-category)
+	 exa. Laptop under latest trending laptop
+
+Here Resources are like User,Product,Category,Cart,Order,Role,Other Module

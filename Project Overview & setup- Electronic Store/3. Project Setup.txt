@@ -1,0 +1,32 @@
+spring initalizr
+----------
+Project - Maven Build
+Language - Java
+Spring Boot - 3.3.2
+
+Project Metadata
+-------
+Group - com.lcwd.electronic.store
+Artifact(ProjectName) - ElectroicStore
+Name - ElectronicStore
+Description - Backend project for electronic store
+package - com.lcwd.electronic store
+packaging - jar
+Java - 17
+
+Dependencies
+------------
+Spring Web
+Spring Data JPA
+Lombok
+MySQL Driver
+Spring Boot DevTools
+
+extract in folder and import into intellij
+create database in mysql (electronic_store)
+lombok in intellij -- setting->Advance Setting --> Compiler ->Allow auto-make to start even if developed application is currently running
+lombok used for getter and setter
+
+application.properties
+
+

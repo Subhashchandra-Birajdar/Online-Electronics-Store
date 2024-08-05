@@ -1,0 +1,19 @@
+Prerequisite
+=========>
+Core Java
+Spring Core
+Spring MVC
+Spring boot
+Database : MySql
+Jpa - ORM Tool
+Mapping - most use in project
+--------
+
+client - Ajay (Open new Shop)
+he sale mobile, freez,
+he want web application, that product sale to online
+he want scalable web application
+
+we will create backend development through spring boot framework
+
+

@@ -16,6 +16,8 @@ public class UserDto {
 
         private String email;
 
+        private String password;
+
         private String gender; // default length is varchar(255)
 
         private String imageName;

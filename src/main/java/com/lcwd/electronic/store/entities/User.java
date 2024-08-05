@@ -25,6 +25,8 @@ public class User {
     @Column(name = "user_email", unique = true) // be default unique is false
     private String email;
 
+    private String password;
+
     private String gender; // default length is varchar(255)
 
     @Column(name = "user_image_name") // only name is stored in db, images stores in image

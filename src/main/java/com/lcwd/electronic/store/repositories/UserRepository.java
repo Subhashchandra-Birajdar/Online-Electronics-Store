@@ -5,9 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User,String> {
 
-
-
-
 // UserRepository capability dont have thats why we extends the JpaRepository
 // Jpaprovide have all method that we perform db operation like sorting,find
 // JpaRepository extends PagingAndSortingRepository extends CrudRepository vs Repository(Head)

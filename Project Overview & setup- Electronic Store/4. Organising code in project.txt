@@ -1,0 +1,8 @@
+Organise the project through package and subpackage
+subpackages are like 
+controllers, repositories, services, exceptions, dtos, helper(utility classes), entities
+inside services another sub package is impl
+
+use class Meaningful name for class, variable
+
+Another way to organise code through model wise

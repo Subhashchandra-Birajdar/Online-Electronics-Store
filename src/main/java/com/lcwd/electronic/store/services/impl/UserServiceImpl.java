@@ -45,7 +45,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(String userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("user not found with given id !!"));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("user not found with given id !!"));
         // delete user
         userRepository.delete(user);
     }
@@ -53,13 +54,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDto> getAllUser() {
         List<User> allusers = userRepository.findAll();
-        List<UserDto> dtoList = allusers.stream().map(user -> entityToDto(user)).collect(Collectors.toList());
+        // here convert list of users to list of DtoUser through streams
+        List<UserDto> dtoList = allusers.stream()
+                .map(user -> entityToDto(user)).collect(Collectors.toList());
         return dtoList;
     }
 
     @Override
     public UserDto getUserById(String userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("user not found with given id !!"));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("user not found with given id !!"));
         UserDto userDto = entityToDto(user);
         return userDto;
     }

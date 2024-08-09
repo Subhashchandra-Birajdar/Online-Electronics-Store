@@ -10,7 +10,7 @@ import lombok.*;
 public class UserDto {
 
 
-        private String UserId; // create coloumn in table
+        private String userId; // create coloumn in table
 
         private String name;
 

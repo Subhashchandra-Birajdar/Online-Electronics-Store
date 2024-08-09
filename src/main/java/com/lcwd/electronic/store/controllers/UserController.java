@@ -52,7 +52,7 @@ public class UserController {
     }
 
     //get by email
-    @GetMapping("/email/{userId}")
+    @GetMapping("/email/{email}")
     public ResponseEntity<UserDto> getUserByEmail(@PathVariable("email")String useremail){
         return new ResponseEntity<>(userService.getUserByEmail(useremail),HttpStatus.OK);
     }

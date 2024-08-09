@@ -25,6 +25,7 @@ public class UserServiceImpl implements UserService {
         // dto -> entity
         //generate unique id string format
         String userId = UUID.randomUUID().toString();
+        userDto.setUserId(userId);
         User user = dtoToEntity(userDto); // dto -> entity
         User savedUser = userRepository.save(user); // entity saved in db table
         UserDto newDto = entityToDto(savedUser); // saved entity to dto

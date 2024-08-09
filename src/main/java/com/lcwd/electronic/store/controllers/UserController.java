@@ -3,6 +3,7 @@ package com.lcwd.electronic.store.controllers;
 import com.lcwd.electronic.store.dtos.UserDto;
 import com.lcwd.electronic.store.payloads.ApiResponseMessage;
 import com.lcwd.electronic.store.services.UserService;
+import jakarta.validation.Valid;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,14 +21,14 @@ public class UserController {
 
     //create
     @PostMapping
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto){
+    public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto){
         UserDto userDto1 = userService.createUser(userDto);
         return new ResponseEntity<>(userDto1, HttpStatus.CREATED);
     }
 
     //update
     @PutMapping("/{userId}") // in url we are passing dynamic data thats why we are using pathvariable & userId
-    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto,@PathVariable("userId")String userId){
+    public ResponseEntity<UserDto> updateUser(@Valid @RequestBody UserDto userDto,@PathVariable("userId")String userId){
         return new ResponseEntity<>(userService.updateUser(userDto,userId),HttpStatus.CREATED);
     }
 

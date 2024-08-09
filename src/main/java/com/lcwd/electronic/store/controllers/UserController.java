@@ -53,8 +53,8 @@ public class UserController {
 
     //get by email
     @GetMapping("/email/{email}")
-    public ResponseEntity<UserDto> getUserByEmail(@PathVariable("email")String useremail){
-        return new ResponseEntity<>(userService.getUserByEmail(useremail),HttpStatus.OK);
+    public ResponseEntity<UserDto> getUserByEmail(@PathVariable("email")String userEmail){
+        return new ResponseEntity<>(userService.getUserByEmail(userEmail),HttpStatus.OK);
     }
 
     // search user

@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto getUserByEmail(String email) {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User is not found for this id"));
+                .orElseThrow(() -> new RuntimeException("User is not found for this email"));
         return entityToDto(user);
     }
 

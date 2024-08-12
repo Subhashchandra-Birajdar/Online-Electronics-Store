@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -60,9 +61,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDto> getAllUser(int pageNumber,int pageSize) {
-    //pageNumber default start from 0
-        Pageable pageable = PageRequest.of(pageNumber,pageSize); // PageRequest is implementation of Pageable
+    public List<UserDto> getAllUser(int pageNumber,int pageSize,String sortBy,String sortDir) {
+
+        //Sort  sort = Sort.by(sortBy);// here we can use ternary operator
+        Sort  sort = (sortDir.equalsIgnoreCase("desc"))?(Sort.by(sortBy).descending()):(Sort.by(sortBy).ascending());
+
+        //pageNumber default start from 0
+        Pageable pageable = PageRequest.of(pageNumber,pageSize,sort); // PageRequest is implementation of Pageable
 
         Page<User> page = userRepository.findAll(pageable);
         // get the user through page

@@ -4,6 +4,7 @@ import com.lcwd.electronic.store.dtos.PageableResponse;
 import com.lcwd.electronic.store.dtos.UserDto;
 import com.lcwd.electronic.store.entities.User;
 import com.lcwd.electronic.store.exceptions.ResourceNotFoundException;
+import com.lcwd.electronic.store.helper.HelperPageResponse;
 import com.lcwd.electronic.store.repositories.UserRepository;
 import com.lcwd.electronic.store.services.UserService;
 import org.modelmapper.ModelMapper;
@@ -68,22 +69,11 @@ public class UserServiceImpl implements UserService {
         Sort  sort = (sortDir.equalsIgnoreCase("desc"))?(Sort.by(sortBy).descending()):(Sort.by(sortBy).ascending());
 
         //pageNumber default start from 0
-        Pageable pageable = PageRequest.of(pageNumber,pageSize,sort); // PageRequest is implementation of Pageable
+        Pageable pageable = PageRequest.of(pageNumber-1,pageSize,sort); // PageRequest is implementation of Pageable
 
         Page<User> page = userRepository.findAll(pageable);
-        // get the user through page
-        List<User> alluserList = page.getContent();
-        // here convert list of users to list of DtoUser through streams
-        List<UserDto> dtoList = alluserList.stream()
-                .map(user -> entityToDto(user)).collect(Collectors.toList());
 
-        PageableResponse<UserDto> response= new PageableResponse<>();
-        response.setContent(dtoList);
-        response.setPageNumber(page.getNumber());
-        response.setPageSize(page.getSize());
-        response.setTotalElements(page.getTotalElements());
-        response.setTotalPages(page.getTotalPages());
-        response.setLastPage(page.isLast());
+        PageableResponse<UserDto> response = HelperPageResponse.getPageableResponse(page, UserDto.class);
 
         return response;
     }

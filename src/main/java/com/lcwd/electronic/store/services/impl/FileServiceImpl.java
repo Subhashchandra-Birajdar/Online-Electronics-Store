@@ -1,9 +1,11 @@
 package com.lcwd.electronic.store.services.impl;
 
-import com.lcwd.electronic.store.exceptions.BadApiRequest;
+
+import com.lcwd.electronic.store.exceptions.BadApiRequestException;
 import com.lcwd.electronic.store.services.FileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
@@ -11,6 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.UUID;
 
+@Service
 public class FileServiceImpl implements FileService {
 
     private Logger logger = LoggerFactory.getLogger(FileServiceImpl.class);
@@ -25,9 +28,13 @@ public class FileServiceImpl implements FileService {
         String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
         //add extendion to that file name (filename+extension)
         String fileNameWithExtension=filename+extension;
-        String fullPathWithFileName=path+ File.separator+fileNameWithExtension; // full path
+        //String fullPathWithFileName=path+ File.separator+fileNameWithExtension; // extra space full path
+        String fullPathWithFileName=path+fileNameWithExtension; // full path
+        logger.info("full image path : {}",fullPathWithFileName);
         if (extension.equalsIgnoreCase(".png") || extension.equalsIgnoreCase(".jpg") || extension.equalsIgnoreCase(".jpeg")) {
             //file save, first we will create folder if folder not present
+
+            logger.info("file extension is : {}",extension);
             File folder = new File(path);
             if(!folder.exists()){
                 //create folder
@@ -38,9 +45,9 @@ public class FileServiceImpl implements FileService {
                 return fileNameWithExtension;
             }
         }else{
-            throw new BadApiRequest("File with this"+extension+"not allowed !!");
+            throw new BadApiRequestException("File with this "+extension+" not allowed !!");
         }
-        return null;
+        return fileNameWithExtension;
     }
 
     @Override

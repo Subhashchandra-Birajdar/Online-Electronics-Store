@@ -1,5 +1,6 @@
 package com.lcwd.electronic.store.controllers;
 
+import com.lcwd.electronic.store.dtos.PageableResponse;
 import com.lcwd.electronic.store.dtos.UserDto;
 import com.lcwd.electronic.store.payloads.ApiResponseMessage;
 import com.lcwd.electronic.store.services.UserService;
@@ -43,7 +44,7 @@ public class UserController {
     // get all
     //get all with pagination pageNumber and pageSize, if user not provide anything it take default
     @GetMapping()
-    public ResponseEntity<List<UserDto>> getAllUser(
+    public ResponseEntity<PageableResponse<UserDto>> getAllUser(
             @RequestParam(value="pageNumber",defaultValue = "0",required = false) int pageNumber,
             @RequestParam(value = "pageSize",defaultValue = "10",required = false) int pageSize,
             @RequestParam(value = "sorBy",defaultValue = "name",required = false) String sortBy,

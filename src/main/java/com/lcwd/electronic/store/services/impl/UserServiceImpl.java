@@ -7,6 +7,9 @@ import com.lcwd.electronic.store.repositories.UserRepository;
 import com.lcwd.electronic.store.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -57,10 +60,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDto> getAllUser() {
-        List<User> allusers = userRepository.findAll();
+    public List<UserDto> getAllUser(int pageNumber,int pageSize) {
+    //pageNumber default start from 0
+        Pageable pageable = PageRequest.of(pageNumber,pageSize); // PageRequest is implementation of Pageable
+
+        Page<User> page = userRepository.findAll(pageable);
+        // get the user through page
+        List<User> alluserList = page.getContent();
         // here convert list of users to list of DtoUser through streams
-        List<UserDto> dtoList = allusers.stream()
+        List<UserDto> dtoList = alluserList.stream()
                 .map(user -> entityToDto(user)).collect(Collectors.toList());
         return dtoList;
     }

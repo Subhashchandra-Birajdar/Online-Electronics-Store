@@ -41,9 +41,13 @@ public class UserController {
     }
 
     // get all
+    //get all with pagination pageNumber and pageSize, if user not provide anything it take default
     @GetMapping()
-    public ResponseEntity<List<UserDto>> getAllUser(){
-        return new ResponseEntity<>(userService.getAllUser(),HttpStatus.OK);
+    public ResponseEntity<List<UserDto>> getAllUser(
+            @RequestParam(value="pageNumber",defaultValue = "0",required = false) int pageNumber,
+            @RequestParam(value = "pageSize",defaultValue = "10",required = false) int pageSize
+    ){
+        return new ResponseEntity<>(userService.getAllUser(pageNumber,pageSize),HttpStatus.OK);
     }
 
     //get single user

@@ -22,38 +22,46 @@ public class FileServiceImpl implements FileService {
     public String uploadFile(MultipartFile file, String path) throws IOException {
         // abc.png add into filename
         String originalFilename = file.getOriginalFilename();
+
         // all the time file name generate new
         logger.info("Filename : {}",originalFilename);
+
         String filename= UUID.randomUUID().toString();
+
         String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+
         //add extendion to that file name (filename+extension)
         String fileNameWithExtension=filename+extension;
         //String fullPathWithFileName=path+ File.separator+fileNameWithExtension; // extra space full path
+
         String fullPathWithFileName=path+fileNameWithExtension; // full path
         logger.info("full image path : {}",fullPathWithFileName);
+
         if (extension.equalsIgnoreCase(".png") || extension.equalsIgnoreCase(".jpg") || extension.equalsIgnoreCase(".jpeg")) {
             //file save, first we will create folder if folder not present
 
             logger.info("file extension is : {}",extension);
             File folder = new File(path);
-            if(!folder.exists()){
+
+            if(!folder.exists()) {
                 //create folder
-                folder.mkdirs();
+                folder.mkdir();
+            }
                 // upload file
                 Files.copy(file.getInputStream(), Paths.get(fullPathWithFileName));
                 // return the file
                 return fileNameWithExtension;
-            }
         }else{
             throw new BadApiRequestException("File with this "+extension+" not allowed !!");
         }
-        return fileNameWithExtension;
+        //return fileNameWithExtension;
     }
 
     @Override
-    public InputStream getResource(String path, String name) throws FileNotFoundException {
-        String fullPath = path+File.separator+name;
+    public InputStream getResource(String path, String fileName) throws FileNotFoundException {
+        String fullPath = path+File.separator+fileName;
         InputStream inputStream= new FileInputStream(fullPath);
+        // db logic to return in the InputStream
         return inputStream;
     }
 }

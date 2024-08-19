@@ -2,7 +2,9 @@ package com.lcwd.electronic.store.services.impl;
 
 import com.lcwd.electronic.store.dtos.CategoryDto;
 import com.lcwd.electronic.store.dtos.PageableResponse;
+import com.lcwd.electronic.store.dtos.UserDto;
 import com.lcwd.electronic.store.entities.Category;
+import com.lcwd.electronic.store.entities.User;
 import com.lcwd.electronic.store.exceptions.ResourceNotFoundException;
 import com.lcwd.electronic.store.helper.HelperPageResponse;
 import com.lcwd.electronic.store.repositories.CategoryRepository;
@@ -15,7 +17,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -76,4 +80,13 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     //search
+    @Override
+    public List<CategoryDto> searchCategory(String keyword) {
+        List<Category> categories = categoryRepository.findByTitleContaining(keyword);
+        List<CategoryDto> categoryDtoList = categories.stream().map(category -> modelMapper.map(category,CategoryDto.class)).collect(Collectors.toList());
+        return categoryDtoList;
+    }
+
+
+
 }

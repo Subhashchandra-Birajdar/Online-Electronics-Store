@@ -2,6 +2,9 @@ package com.lcwd.electronic.store.services;
 
 import com.lcwd.electronic.store.dtos.CategoryDto;
 import com.lcwd.electronic.store.dtos.PageableResponse;
+import com.lcwd.electronic.store.entities.Category;
+
+import java.util.List;
 
 public interface CategoryService {
     // loosely coupling technique
@@ -22,4 +25,5 @@ public interface CategoryService {
     CategoryDto getSingleCategory(String categoryId);
 
     //search category
+    List<CategoryDto> searchCategory(String keyword);
 }

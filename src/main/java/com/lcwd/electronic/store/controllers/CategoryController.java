@@ -2,6 +2,7 @@ package com.lcwd.electronic.store.controllers;
 
 import com.lcwd.electronic.store.dtos.CategoryDto;
 import com.lcwd.electronic.store.dtos.PageableResponse;
+import com.lcwd.electronic.store.dtos.UserDto;
 import com.lcwd.electronic.store.payloads.ApiResponseMessage;
 import com.lcwd.electronic.store.services.CategoryService;
 import jakarta.validation.Valid;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/categories")
@@ -58,5 +61,13 @@ public class CategoryController {
     public ResponseEntity<CategoryDto> getSingleCategory(@PathVariable String categoryId){
         return new ResponseEntity<>(categoryService.getSingleCategory(categoryId),HttpStatus.OK);
     }
+
+    // search user
+    @GetMapping("/search-by-title/{keywords}")
+    public ResponseEntity<List<CategoryDto>> searchUser(@PathVariable("keywords")String keywords){
+        return new ResponseEntity<>(categoryService.searchCategory(keywords),HttpStatus.OK);
+    }
+
+
 
 }

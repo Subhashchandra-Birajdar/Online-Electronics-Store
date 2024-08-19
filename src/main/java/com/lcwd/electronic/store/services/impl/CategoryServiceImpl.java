@@ -28,9 +28,10 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDto createCategory(CategoryDto categoryDto) {
-        Category category = modelMapper.map(categoryDto, Category.class);
+
         String categoryId = UUID.randomUUID().toString();
         categoryDto.setCategoryId(categoryId);
+        Category category = modelMapper.map(categoryDto, Category.class);
         Category saveCategory = categoryRepository.save(category);
         return modelMapper.map(saveCategory,CategoryDto.class);
     }
@@ -48,18 +49,24 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void deleteCategoryById(String categoryId) {
-        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category not found for this id"));
+        Category category = categoryRepository.findById(categoryId).orElseThrow(()
+                -> new ResourceNotFoundException("Category not found for this id"));
         categoryRepository.delete(category);
     }
 
     @Override
-    public PageableResponse<CategoryDto> getAllCategories(int pageNo, int pageSize, String sortBy, String sortDir) {
-        Sort sort = (sortDir.equalsIgnoreCase("desc"))?(Sort.by(sortBy).descending()):(Sort.by(sortBy).ascending());
-        Pageable pageable = PageRequest.of(pageNo,pageSize,sort);
+    public PageableResponse<CategoryDto> getAllCategories(int pageNumber, int pageSize, String sortBy, String sortDir) {
+        //Sort  sort = Sort.by(sortBy);// here we can use ternary operator
+        Sort  sort = (sortDir.equalsIgnoreCase("desc"))?(Sort.by(sortBy).descending()):(Sort.by(sortBy).ascending());
+
+        //pageNumber default start from 0
+        Pageable pageable = PageRequest.of(pageNumber-1,pageSize,sort); // PageRequest is implementation of Pageable
+
         Page<Category> page = categoryRepository.findAll(pageable);
-        //get page and content and convert into content into dto
-        PageableResponse<CategoryDto> pageableResponse = HelperPageResponse.getPageableResponse(page, CategoryDto.class);
-        return pageableResponse;
+
+        PageableResponse<CategoryDto> response = HelperPageResponse.getPageableResponse(page, CategoryDto.class);
+
+        return response;
     }
 
     @Override

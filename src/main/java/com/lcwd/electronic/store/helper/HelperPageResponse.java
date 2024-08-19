@@ -8,7 +8,7 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class HelperPageResponse {
+public class  HelperPageResponse {
 
     public static <U,V> PageableResponse<V> getPageableResponse(Page<U> page,Class<V> type){ // here U is entity , V means Dto
         // get the user through page

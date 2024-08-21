@@ -2,6 +2,7 @@ package com.lcwd.electronic.store.controllers;
 
 import com.lcwd.electronic.store.dtos.PageableResponse;
 import com.lcwd.electronic.store.dtos.ProductDto;
+import com.lcwd.electronic.store.payloads.ApiResponseMessage;
 import com.lcwd.electronic.store.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,7 +31,18 @@ public class ProductController {
         return new ResponseEntity<>(updated,HttpStatus.OK);
     }
 
-    @GetMapping("/{productid}")
+    @DeleteMapping("/{productId}")
+    public ResponseEntity<ApiResponseMessage> deleteProduct(@PathVariable String productId){
+        productService.delete(productId);
+        ApiResponseMessage responseMessage = ApiResponseMessage.builder()
+                .message("Product is deleted")
+                .status(HttpStatus.OK)
+                .success(true)
+                .build();
+        return new ResponseEntity<>(responseMessage,HttpStatus.OK);
+    }
+
+    @GetMapping("/{productId}")
     public ResponseEntity<ProductDto> getProduct(@PathVariable String productId
     ){
         ProductDto updated = productService.getProduct(productId);
@@ -48,7 +60,7 @@ public class ProductController {
         return new ResponseEntity<>(productDtoPageableResponse,HttpStatus.OK);
     }
 
-    @GetMapping
+    @GetMapping("/live")
     public ResponseEntity<PageableResponse<ProductDto>> getAlllProductLive(
             @RequestParam(value="pageNumber",defaultValue = "0",required = false) int pageNumber,
             @RequestParam(value = "pageSize",defaultValue = "10",required = false) int pageSize,

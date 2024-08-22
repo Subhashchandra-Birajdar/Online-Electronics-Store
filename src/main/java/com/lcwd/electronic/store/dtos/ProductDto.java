@@ -21,5 +21,7 @@ public class ProductDto {
     private Date addedDate;
     private boolean live;
     private boolean stock;
+    //added new
+    private String productImageName;
 
 }

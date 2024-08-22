@@ -93,7 +93,9 @@ public class CategoryController {
         CategoryDto categoryDto = categoryService.getSingleCategory(categoryId);
         categoryDto.setCoverImage(imageName);
         CategoryDto categoryDto1 = categoryService.updateCategory(categoryId,categoryDto);
-        ImageResponse imageResponse = ImageResponse.builder().imageName(imageName).success(true).status(HttpStatus.CREATED).build();
+        ImageResponse imageResponse = ImageResponse.builder()
+                .message("Category image is updated !!")
+                .imageName(imageName).success(true).status(HttpStatus.CREATED).build();
         return  new ResponseEntity<>(imageResponse,HttpStatus.CREATED);
     }
 

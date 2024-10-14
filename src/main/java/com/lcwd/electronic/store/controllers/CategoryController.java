@@ -2,11 +2,13 @@ package com.lcwd.electronic.store.controllers;
 
 import com.lcwd.electronic.store.dtos.CategoryDto;
 import com.lcwd.electronic.store.dtos.PageableResponse;
+import com.lcwd.electronic.store.dtos.ProductDto;
 import com.lcwd.electronic.store.dtos.UserDto;
 import com.lcwd.electronic.store.payloads.ApiResponseMessage;
 import com.lcwd.electronic.store.payloads.ImageResponse;
 import com.lcwd.electronic.store.services.CategoryService;
 import com.lcwd.electronic.store.services.FileService;
+import com.lcwd.electronic.store.services.ProductService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,9 @@ public class CategoryController {
 
     @Value("${project.image}")
     private String imageUploadPath; // dynamic
+
+    @Autowired
+    private ProductService productService;
 
     // create Category API
     @PostMapping
@@ -111,9 +116,14 @@ public class CategoryController {
         response.setContentType(MediaType.IMAGE_JPEG_VALUE);
         // resource we will convert into our class (resource - > class response -> streamUtils
         StreamUtils.copy(resource,response.getOutputStream());
-
     }
 
-
-
+    // create product with category
+    @PostMapping("/{categoryId}/products")
+    public ResponseEntity<ProductDto> createProductWithCategory(
+            @PathVariable("categoryId") String categoryId,
+            @RequestBody ProductDto productDto){
+        ProductDto productWithCategory = productService.createWithCategory(productDto, categoryId);
+        return new ResponseEntity<>(productWithCategory,HttpStatus.CREATED);
+    }
 }

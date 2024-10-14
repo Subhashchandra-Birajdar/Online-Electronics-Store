@@ -24,4 +24,7 @@ public class ProductDto {
     //added new
     private String productImageName;
 
+    // product into category
+    private CategoryDto category;
+
 }

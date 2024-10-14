@@ -2,9 +2,11 @@ package com.lcwd.electronic.store.services.impl;
 
 import com.lcwd.electronic.store.dtos.PageableResponse;
 import com.lcwd.electronic.store.dtos.ProductDto;
+import com.lcwd.electronic.store.entities.Category;
 import com.lcwd.electronic.store.entities.Product;
 import com.lcwd.electronic.store.exceptions.ResourceNotFoundException;
 import com.lcwd.electronic.store.helper.HelperPageResponse;
+import com.lcwd.electronic.store.repositories.CategoryRepository;
 import com.lcwd.electronic.store.repositories.ProductRepository;
 import com.lcwd.electronic.store.services.ProductService;
 import org.modelmapper.ModelMapper;
@@ -25,6 +27,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
+
     @Override
     public ProductDto create(ProductDto productDto) {
         String productId = UUID.randomUUID().toString();
@@ -88,5 +94,21 @@ public class ProductServiceImpl implements ProductService {
         Page<Product> page = productRepository.findByLiveTrue(pageable);
         return HelperPageResponse.getPageableResponse(page,ProductDto.class);
 
+    }
+
+    @Override
+    public ProductDto createWithCategory(ProductDto productDto, String categoryId) {
+        //first fetch the category from db :
+        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("category not found !!"));
+        // for saved product
+        Product product = modelMapper.map(productDto, Product.class);
+        // product id
+        String productId = UUID.randomUUID().toString();
+        product.setProductId(productId);
+        product.setAddedDate(new Date());
+        //before saving product add the category
+        product.setCategory(category); // set the category
+        Product savedproduct = productRepository.save(product); // save the product
+        return modelMapper.map(savedproduct,ProductDto.class); // entity to dto convert
     }
 }

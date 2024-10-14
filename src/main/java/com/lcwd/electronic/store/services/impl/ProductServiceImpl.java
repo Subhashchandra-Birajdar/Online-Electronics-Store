@@ -111,4 +111,15 @@ public class ProductServiceImpl implements ProductService {
         Product savedproduct = productRepository.save(product); // save the product
         return modelMapper.map(savedproduct,ProductDto.class); // entity to dto convert
     }
+
+    @Override
+    public ProductDto updateCateogry(String productId, String categoryId) {
+        //fetch product
+        Product product = productRepository.findById(productId).orElseThrow(() -> new ResourceNotFoundException("product not found !!"));
+        // fetch category
+        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("category not found with Id !!"));
+        product.setCategory(category);
+        Product savedProduct = productRepository.save(product);
+        return modelMapper.map(savedProduct,ProductDto.class);
+    }
 }
